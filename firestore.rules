@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: leaderboard
+    // Document ID: auto-generated
+    // Fields:
+    //   - userId: string (required, immutable) - The Firebase Auth UID of the user.
+    //   - displayName: string (required, immutable) - The display name of the user.
+    //   - score: number (required, immutable) - The final FinScore achieved.
+    //   - money: number (required, immutable) - The final money amount.
+    //   - wiseDecisions: number (required, immutable) - The number of wise decisions made.
+    //   - timestamp: timestamp (required, immutable) - The time the score was submitted.
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function isValidLeaderboardEntry() {
+      return hasRequiredFields(['userId', 'displayName', 'score', 'money', 'wiseDecisions', 'timestamp']) &&
+             hasOnlyAllowedFields(['userId', 'displayName', 'score', 'money', 'wiseDecisions', 'timestamp']) &&
+             request.resource.data.userId is string &&
+             request.resource.data.displayName is string &&
+             request.resource.data.displayName.size() > 0 &&
+             request.resource.data.displayName.size() <= 50 &&
+             request.resource.data.score is number &&
+             request.resource.data.score >= 0 &&
+             request.resource.data.money is number &&
+             request.resource.data.wiseDecisions is number &&
+             request.resource.data.wiseDecisions >= 0 &&
+             request.resource.data.timestamp is timestamp;
+    }
+
+    match /leaderboard/{entryId} {
+      // Anyone can read the leaderboard (it's public)
+      allow read: if true;
+      
+      // Only authenticated users can create their own score entries
+      allow create: if isAuthenticated() && 
+                    isOwner(request.resource.data.userId) && 
+                    isValidLeaderboardEntry();
+      
+      // Leaderboard entries are immutable once created
+      allow update, delete: if false;
+    }
+  }
+}

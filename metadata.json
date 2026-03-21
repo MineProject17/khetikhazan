@@ -1,0 +1,7 @@
+{
+  "name": "KhetiKhazana",
+  "description": "India's first AI financial literacy game for farmers. A 12-month farming simulation.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

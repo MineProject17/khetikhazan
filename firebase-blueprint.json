@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "A user's final score and stats in the KhetiKhazana game.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The Firebase Auth UID of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name of the user."
+        },
+        "score": {
+          "type": "number",
+          "description": "The final FinScore achieved."
+        },
+        "money": {
+          "type": "number",
+          "description": "The final money amount."
+        },
+        "wiseDecisions": {
+          "type": "number",
+          "description": "The number of wise decisions made."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time the score was submitted."
+        }
+      },
+      "required": ["userId", "displayName", "score", "money", "wiseDecisions", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/leaderboard/{entryId}": {
+      "schema": {
+        "$ref": "#/entities/LeaderboardEntry"
+      },
+      "description": "Stores the high scores of players."
+    }
+  }
+}
