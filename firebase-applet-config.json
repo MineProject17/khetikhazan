@@ -1,5 +1,5 @@
 {
-  
+  apiKey: process.env.API_KEY
 VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 VITE_FIREBASE_PROJECT_ID=your_project_id
 VITE_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
