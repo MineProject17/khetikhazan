@@ -1,10 +1,9 @@
 {
-  "projectId": "ai-bootcamp-481708",
-  "appId": "1:865460239766:web:2afcb33e2c7c2ccbdfb1b7",
-  "apiKey": "AIzaSyDIT4vXsABbKHRgRXToN2cPB5TcRaiBfVg",
-  "authDomain": "ai-bootcamp-481708.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-cfc224d8-e97e-4939-a2dc-7561b4385012",
-  "storageBucket": "ai-bootcamp-481708.firebasestorage.app",
-  "messagingSenderId": "865460239766",
-  "measurementId": ""
+  VITE_FIREBASE_API_KEY=your_firebase_key_here
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_GEMINI_API_KEY=your_gemini_key_here
 }
